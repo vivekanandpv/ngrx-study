@@ -1,5 +1,7 @@
 import {createReducer, on} from "@ngrx/store";
-import {incrementActionCreator} from "./general.actions";
+import {changeLanguage, incrementActionCreator} from "./general.actions";
+import produce from "immer";
+
 
 export interface FeatureState {
   counter: number;
@@ -7,6 +9,14 @@ export interface FeatureState {
 
 export const initialState: FeatureState = {
   counter: 0
+};
+
+export interface LanguageFeature {
+  language: string;
+}
+
+export const languageInitialState: LanguageFeature = {
+  language: 'english'
 };
 
 export const generalReducerCreator = createReducer(
@@ -17,5 +27,14 @@ export const generalReducerCreator = createReducer(
     const newCounter = {...state};
     ++newCounter.counter;
     return newCounter;
+  })
+);
+
+export const languageReducer = createReducer(
+  languageInitialState,
+  on(changeLanguage, (state, action) => {
+    return produce(state, s => {
+      s.language = action.language;
+    });
   })
 );

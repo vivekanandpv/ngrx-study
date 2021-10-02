@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {incrementActionCreator} from "../feature/general.actions";
+import {changeLanguage, incrementActionCreator} from "../feature/general.actions";
 import {counterSelector} from "../feature/general.selectors";
 
 @Component({
@@ -21,6 +21,12 @@ export class ContainerComponent implements OnInit {
   increment() {
     this.store.dispatch(incrementActionCreator({
       factor: 0
+    }));
+  }
+
+  changeHandler(e: any): void {
+    this.store.dispatch(changeLanguage({
+      language: e.target.value
     }));
   }
 
